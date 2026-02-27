@@ -46,7 +46,7 @@ def register_builtins(registry) -> None:
 
     impls = [
         # Activations - Forward
-        OpImpl(op_name="gelu", impl_id="vendor.cuda", kind=BackendImplKind.VENDOR, fn=_bind_is_available(backend.gelu, is_avail), vendor="CUDA", priority=100),
+        OpImpl(op_name="gelu", impl_id="vendor.ascend", kind=BackendImplKind.VENDOR, fn=_bind_is_available(backend.gelu, is_avail), vendor="ASCEND", priority=100),
     ]
 
     registry.register_many(impls)
