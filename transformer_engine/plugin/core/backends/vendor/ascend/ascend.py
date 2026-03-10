@@ -14,23 +14,17 @@ import torch.nn.functional as F
 
 from ....ops import TEFLBackendBase, FP8TensorMeta
 
-
 def _check_ascend_available() -> bool:
-    if not torch_npu.npu.is_available():
-        return False
-
     import os
-
     try:
         import torch_npu
-
         return True
     except ImportError:
         print("[ASCEND] Disabled: import failed")
         return False
 
 
-class ASCENDBackend(TEFLBackendBase):
+class AscendBackend(TEFLBackendBase):
     @staticmethod
     def check_available() -> bool:
         return _check_ascend_available()
@@ -40,6 +34,10 @@ class ASCENDBackend(TEFLBackendBase):
 
     def is_available(self) -> bool:
         return _check_ascend_available()
+
+    def get_flash_attention_class(self):
+        from .flash_attention import FlashAttentionASCEND
+        return FlashAttentionASCEND
 
     def gelu(self, input: torch.Tensor, quantizer: Any) -> Any:
         return F.gelu(input)
